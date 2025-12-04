@@ -18,11 +18,15 @@ module tb_SmartCounter;
     $monitor("%4t   %b      %b    %b      %h      %h", $time, arst_n, load, enable, load_val, q);
   end
 
-  // clock
+  // clock generator
   initial clk = 0;
   always #5 clk = ~clk; // 100 MHz -> 10ns period
 
   initial begin
+    
+    $dumpfile("smart_counter.vcd");      // waveform file name
+    $dumpvars(0, tb_SmartCounter);       // dump everything in this module
+
     // initial reset
     arst_n = 0; load = 0; enable = 0; load_val = 8'hAA;
     #12; // while clock toggles
@@ -53,3 +57,4 @@ module tb_SmartCounter;
     $finish;
   end
 endmodule
+
